@@ -103,17 +103,39 @@
 <!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
 <script src="js/main.js" async></script>
 <script>
-const cameraOptions = document.querySelector('.video-options>select');
-const getCameraSelection = async () => {
-  const devices = await navigator.mediaDevices.enumerateDevices();
-  const videoDevices = devices.filter(device => device.kind === 'videoinput');
-  const options = videoDevices.map(videoDevice => {
-    return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
-  });
-  cameraOptions.innerHTML = options.join('');
-};
+// const cameraOptions = document.querySelector('.video-options>select');
+// const getCameraSelection = async () => {
+//   const devices = await navigator.mediaDevices.enumerateDevices();
+//   const videoDevices = devices.filter(device => device.kind === 'videoinput');
+//   const options = videoDevices.map(videoDevice => {
+//     return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
+//   });
+//   cameraOptions.innerHTML = options.join('');
+// };
 
-getCameraSelection();
+// getCameraSelection();
+
+
+
+const select = document.getElementById('cameraSelect');
+
+function gotDevices(mediaDevices) {
+  select.innerHTML = '';
+  select.appendChild(document.createElement('option'));
+  let count = 1;
+  mediaDevices.forEach(mediaDevice => {
+    if (mediaDevice.kind === 'videoinput') {
+      const option = document.createElement('option');
+      option.value = mediaDevice.deviceId;
+      const label = mediaDevice.label || `Camera ${count++}`;
+      const textNode = document.createTextNode(label);
+      option.appendChild(textNode);
+      select.appendChild(option);
+    }
+  });
+}
+
+navigator.mediaDevices.enumerateDevices().then(gotDevices);
 </script>
 
 </body>

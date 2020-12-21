@@ -1,142 +1,39 @@
 <!DOCTYPE html>
-<!--
- *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
- *
- *  Use of this source code is governed by a BSD-style license
- *  that can be found in the LICENSE file in the root of the source
- *  tree.
--->
 <html>
 <head>
 
-    <meta charset="utf-8">
-    <meta name="description" content="Web Camera test">
-    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
-    <meta itemprop="name" content="Web Camera test">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta id="theme-color" name="theme-color" content="#ffffff">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <base target="_blank">
-
-    <title>getUserMedia: select resolution</title>
+    <title>Switch Camera</title>
 
     <link rel="stylesheet" href="css/main.css">
-
-    <style>
-        body, html {
-            height: 100%;
-        }
-
-        button {
-            margin: 0 10px 20px 0;
-            width: 90px;
-        }
-
-        div#buttons {
-            margin: 0 0 1em 0;
-        }
-
-        div#container {
-            max-width: 100%;
-        }
-
-        #errormessage {
-            display: none;
-            font-size: 300%;
-        }
-
-        #videoblock {
-            display: none;
-        }
-
-        p#dimensions {
-            height: 1em;
-            margin: 0 0 1.5em 0;
-        }
-
-        video {
-            background: none;
-            height: auto;
-            width: auto;
-        }
-    </style>
-
 </head>
 
 <body>
 
-<div id="container">
-
-    <h1><a href="//webrtc.github.io/samples/" title="Web Camera test">Web Camera test</a>    
-    </h1>
-    <p></p>
-
-    <p>Click a button to call <code>getUserMedia()</code> with appropriate resolution.</p>
-    <div class="video-options">
-        <select name="" id="cameraSelect" class="custom-select">
-            <option value="">Select camera</option>
-        </select>
-    </div>
-    <div id="buttons">
-        <button id="qvga">QVGA</button>
-        <button id="vga">VGA</button>
-        <button id="hd">HD</button>
-        <button id="full-hd">Full HD</button>
-        <button id="fourK">4K</button>
-        <button id="eightK">8K</button>
-    </div>
-
-    <div id="videoblock">
-        <p id="dimensions"></p>
-
-        <video id="gum-res-local" playsinline autoplay></video>
-        <div id="width">
-            <label>Width <span></span>px:</label>
-            <input type="range" min="0" max="7680" value="0">
+    <header>
+        <h1>Camera Test</h1>
+      </header>
+    
+      <main>
+        <div class="controls">
+          <button id="button">Get camera</button>
+          <select id="select">
+            <option></option>
+          </select>
         </div>
-        <input id="sizelock" type="checkbox">Lock video size<br>
-        <input id="aspectlock" type="checkbox">Lock aspect ratio<br>
-    </div>
-    <p id="errormessage"></p>
-</div>
+    
+        <video id="video" autoplay playsinline></video>
+      </main>
+    
+      <footer>
+        <p>Built by
+          <a href="https://twitter.com/philnash">@philnash</a>
+        </p>
+      </footer>
 
-<!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
 <script src="js/main.js" async></script>
-<script>
-const cameraOptions = document.querySelector('.video-options>select');
-const getCameraSelection = async () => {
-  const devices = await navigator.mediaDevices.enumerateDevices();
-  const videoDevices = devices.filter(device => device.kind === 'videoinput');
-  const options = videoDevices.map(videoDevice => {
-    return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
-  });
-  cameraOptions.innerHTML = options.join('');
-};
-
-getCameraSelection();
-
-
-
-// const select = document.getElementById('cameraSelect');
-
-// function gotDevices(mediaDevices) {
-//   select.innerHTML = '';
-//   select.appendChild(document.createElement('option'));
-//   let count = 1;
-//   mediaDevices.forEach(mediaDevice => {
-//     if (mediaDevice.kind === 'videoinput') {
-//       const option = document.createElement('option');
-//       option.value = mediaDevice.deviceId;
-//       const label = mediaDevice.label || `Camera ${count++}`;
-//       const textNode = document.createTextNode(label);
-//       option.appendChild(textNode);
-//       select.appendChild(option);
-//     }
-//   });
-// }
-
-// navigator.mediaDevices.enumerateDevices().then(gotDevices);
-</script>
-
 </body>
 </html>
